@@ -3,13 +3,21 @@ import Image from 'next/image'
 import { MapPinIcon } from '@heroicons/react/24/outline'
 import Footer from '@/components/Footer'
 import { ProductData } from '@/domain/product/product-domain'
+import { useEffect, useState } from 'react'
+import axios from '@/services/axios'
 
 export type HomePageProps = {
   products: ProductData[]
 }
-
-export default function HomePage({ products }: HomePageProps) {
-  products = products.slice(0, 4)
+export default function Home() {
+  const [products, setProducts] = useState<ProductData[]>([])
+  useEffect(() => {
+    const getProducts = async () => {
+      const response = await axios.get('products?populate=*')
+      setProducts(response.data.data)
+    }
+    getProducts()
+  }, [])
   return (
     <div>
       <Header />
@@ -34,8 +42,8 @@ export default function HomePage({ products }: HomePageProps) {
       </div>
 
       <div>
-        <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8'>
-          <h2 className='text-gray-900 text-2xl font-semibold tracking-tight'>
+        <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-20 lg:max-w-7xl lg:px-8'>
+          <h2 className='text-gray-900 text-2xl font-normal tracking-tight'>
             Our Flavors
           </h2>
           <div className='mt-2 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
@@ -43,10 +51,7 @@ export default function HomePage({ products }: HomePageProps) {
               <div key={product.attributes.slug} className='group relative'>
                 <div className='aspect-h-1 aspect-w-1 bg-gray-200 lg:aspect-none w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-80'>
                   <img
-                    src={
-                      'http://localhost:1337' +
-                      product.attributes.image.data.attributes.url
-                    }
+                    src='https://www.abcfoodservice.it/22491-large_default/bebida-de-cafe-starbucks-frappuccino-ml250.jpg'
                     className='h-full w-full object-cover object-center lg:h-full lg:w-full'
                   />
                 </div>
@@ -73,9 +78,9 @@ export default function HomePage({ products }: HomePageProps) {
         </div>
         <div className='flex items-center justify-center text-wrap text-white md:w-1/2'>
           <div className='mb-5 text-center'>
-            <h2 className='p-2 font-montserrat text-2xl font-semibold'>
+            <h2 className='p-4 font-montserrat text-2xl font-semibold'>
               Grown responsibly and traded ethically to help create a better
-              future for producers.
+              future for producers
             </h2>
             <button className='mt-3 w-32 rounded-md  bg-brown-light px-3'>
               more
@@ -85,9 +90,9 @@ export default function HomePage({ products }: HomePageProps) {
       </div>
       <div className='mt-1'>
         <div className='bg-white' id='localizacao'>
-          <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
+          <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-20 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
             <div>
-              <h2 className='text-gray-900 text-3xl font-semibold tracking-tight sm:text-4xl'>
+              <h2 className='text-gray-900 text-3xl font-normal tracking-tight sm:text-4xl'>
                 Our Place
               </h2>
               <p className='text-gray-500 mt-4'>
@@ -97,7 +102,7 @@ export default function HomePage({ products }: HomePageProps) {
                 hospitality.
               </p>
               <p className='mt-4 text-sm'>
-                <MapPinIcon className=' inline h-5 w-5' />
+                <MapPinIcon className=' inline h-2 w-2' />
                 Rua Terreno Toscano 68, Jardim Cerrado
               </p>
 
