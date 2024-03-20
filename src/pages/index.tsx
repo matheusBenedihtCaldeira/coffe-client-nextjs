@@ -3,10 +3,9 @@ import Image from 'next/image'
 import { MapPinIcon } from '@heroicons/react/24/outline'
 import Footer from '@/components/Footer'
 import { ProductData } from '@/domain/product/product-domain'
-import { useEffect, useState } from 'react'
-import axios from '@/services/axios'
 import { getAllProducts } from '@/data/products/get-all-products'
 import { GetStaticProps } from 'next'
+import Link from 'next/link'
 
 export type HomePageProps = {
   products: ProductData[]
@@ -30,8 +29,8 @@ export default function Home({ products }: HomePageProps) {
               Regardless of your taste or palate, you will find a perfect coffee
               for you
             </p>
-            <button className='my-3 w-32 rounded-md  bg-brown-light px-3'>
-              more
+            <button className='my-3 w-32 rounded-md bg-brown-light px-3'>
+              <Link href='/menu'>more</Link>
             </button>
           </div>
         </div>
