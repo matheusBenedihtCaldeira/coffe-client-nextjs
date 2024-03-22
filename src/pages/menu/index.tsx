@@ -30,10 +30,7 @@ export default function ProductMenu({ categories }: MenuPageProps) {
                 <div key={product.attributes.slug} className='group relative'>
                   <div className='aspect-h-1 aspect-w-1 bg-gray-200 lg:aspect-none w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-80'>
                     <img
-                      src={
-                        'http://localhost:1337' +
-                        product.attributes.image.data.attributes.url
-                      }
+                      src={product.attributes.image.data.attributes.url}
                       alt=''
                       className='h-full w-full object-cover object-center lg:h-full lg:w-full'
                     />

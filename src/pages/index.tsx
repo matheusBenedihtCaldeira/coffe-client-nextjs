@@ -78,7 +78,7 @@ export default function Home({ products }: HomePageProps) {
               future for producers
             </h2>
             <button className='mt-3 w-32 rounded-md  bg-brown-light px-3'>
-              more
+              <Link href='/ourCoffee'>more</Link>
             </button>
           </div>
         </div>
