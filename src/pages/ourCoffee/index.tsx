@@ -1,7 +1,15 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import { getAllPosts } from '@/data/post/get-all-posts'
+import { PostData } from '@/domain/posts/post-domain'
+import { GetStaticProps } from 'next'
 
-export default function OurCoffee() {
+export type PostsPageProps = {
+  posts: PostData[]
+}
+
+export default function OurCoffee({ posts }: PostsPageProps) {
+  console.log(posts[0].attributes.cover.data.attributes.url)
   return (
     <div>
       <Header />
@@ -41,33 +49,39 @@ export default function OurCoffee() {
       <div className='py-12 sm:py-5'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='border-gray-200 mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-            <article className='hover:bg-slate-100 flex max-w-xl flex-col items-start justify-between rounded-md p-2'>
-              <div className='flex items-center gap-x-4 text-xs'>
-                <time className='text-gray-500'>Data do post</time>
-              </div>
-              <div className='group relative'>
-                <h3 className='text-gray-900 group-hover:text-gray-600 mt-3 text-lg font-semibold leading-6'>
-                  <a href='#'>
-                    <span className='absolute inset-0' />
-                    Lorem ipsum dolor sit amet
-                  </a>
-                </h3>
-                <img
-                  src='https://www.nescafe.com/gb/sites/default/files/2023-11/Untitled-5%20copy_6.jpg'
-                  alt=''
-                  className=' h-40 w-full rounded-md object-cover shadow-lg'
-                />
-                <p className='text-gray-600 mt-5 line-clamp-3 text-sm leading-6'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
-                  expedita voluptas culpa sapiente alias molestiae. Numquam
-                  corrupti in laborum sed rerum et corporis
-                </p>
-              </div>
-            </article>
+            {posts.map((post) => (
+              <article
+                key={post.id}
+                className='flex max-w-xl flex-col items-start justify-between rounded-md p-2 hover:bg-slate-100'
+              >
+                <div className='group relative w-full'>
+                  <img
+                    src={post.attributes.cover.data.attributes.url}
+                    alt=''
+                    className=' h-40 w-full rounded-md object-cover shadow-lg'
+                  />
+                  <h3 className='text-gray-900 group-hover:text-gray-600 mt-3 text-lg font-semibold leading-6'>
+                    <a href='#'>
+                      <span className='absolute inset-0' />
+                      {post.attributes.title}
+                    </a>
+                  </h3>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>
       <Footer />
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const posts = await getAllPosts()
+  return {
+    props: {
+      posts,
+    },
+  }
 }

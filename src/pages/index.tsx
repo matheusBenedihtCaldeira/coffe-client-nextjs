@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { MapPinIcon } from '@heroicons/react/24/outline'
 import Footer from '@/components/Footer'
 import { ProductData } from '@/domain/product/product-domain'
-import { getAllProducts } from '@/data/products/get-all-products'
+import { getAllProducts } from '@/data/product/get-all-products'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
